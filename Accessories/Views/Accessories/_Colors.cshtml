@@ -1,0 +1,19 @@
+﻿@using Accessories.Models
+<table class="table">
+    @if (Session["Colors"] != null)
+            {
+                foreach (var item in Session["Colors"] as List<color>)
+                {
+            <tr>
+                <td>@item.Name</td>
+            </tr>
+        }
+    }
+</table>
+
+
+
+
+
+
+

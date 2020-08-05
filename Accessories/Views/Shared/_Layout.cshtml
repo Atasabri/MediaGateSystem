@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Media Gate System</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .agile_short_dropdown {
+            border-radius: 0;
+            background: #ffffff;
+            text-align: center;
+            padding: 0;
+            border: none;
+        }
+
+            .agile_short_dropdown li a {
+                text-transform: uppercase;
+                color: #212121;
+                font-size: 12px;
+                font-weight: 500;
+                padding: .8em 0;
+                border-bottom: 1px solid #ececef;
+            }
+
+            .agile_short_dropdown > li > a:hover {
+                color: #212121;
+                text-decoration: none;
+                background-color: #0094ff;
+            }
+
+        .navbar-nav .open .dropdown-menu {
+            background-color: #ffffff;
+            padding: 10px 0;
+        }
+
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+            color: #fff;
+        }
+    </style>
+
+</head>
+<body>
+    @using Accessories.Models
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="http://www.mediagatestudios.com"><img src="~/MediaGate.jpg" width="100" height="50" /></a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                }
+                else
+                {
+                    @Html.ActionLink("Media Gate System", "Signin", "Auth", new { area = "" }, new { @class = "navbar-brand f" })
+                }
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle hvr-underline-from-center" style="font-size:16px" data-toggle="dropdown">Accessories<b class="fa fa-caret-down"></b></a>
+                            <ul class="dropdown-menu agile_short_dropdown">
+                                <li class="f" style="font-size:16px">@Html.ActionLink("Create New", "Create", "Accessories")</li> 
+                                <li class="f" style="font-size:16px">@Html.ActionLink("Show Accessories", "Index", "Accessories")</li>  
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle hvr-underline-from-center" style="font-size:16px" data-toggle="dropdown">Categories<b class="fa fa-caret-down"></b></a>
+                            <ul class="dropdown-menu agile_short_dropdown">
+                                @foreach (var item in new DB().Categories)
+                                {
+                                    <li class="f">@Html.ActionLink(item.Name, "Details", "Categories",new { id=item.ID},null)</li>
+                                }
+                                <li class="f">@Html.ActionLink("All", "Index", "Categories")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle hvr-underline-from-center" style="font-size:16px" data-toggle="dropdown">Sub Categories<b class="fa fa-caret-down"></b></a>
+                            <ul class="dropdown-menu agile_short_dropdown">
+                                @foreach (var item in new DB().SubCat1)
+                                {
+                                    <li class="f">@Html.ActionLink(item.Name, "Details", "SubCat1", new { id = item.ID }, null)</li>
+                                }
+                                <li class="f">@Html.ActionLink("All", "Index", "SubCat1")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle hvr-underline-from-center" style="font-size:16px" data-toggle="dropdown">2nd Categories<b class="fa fa-caret-down"></b></a>
+                            <ul class="dropdown-menu agile_short_dropdown">
+                                @foreach (var item in new DB().SubCat2)
+                                {
+                                    <li class="f">@Html.ActionLink(item.Name, "Details", "SubCat2", new { id = item.ID }, null)</li>
+                                }
+                                <li class="f">@Html.ActionLink("All", "Index", "SubCat2")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle hvr-underline-from-center" data-toggle="dropdown" style="font-size:16px">Other<b class="fa fa-caret-down"></b></a>
+                            <ul class="dropdown-menu agile_short_dropdown">
+                                <li class="f">@Html.ActionLink("Users", "Index", "Users")</li>
+                                <li class="f">@Html.ActionLink("Statues", "Index", "Statues")</li>
+                                <li class="f">@Html.ActionLink("Departments", "Index", "Departments")</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <form method="post" action="~/Accessories/Index">
+                                <input id="Text1" type="search" name="search" placeholder="Search" class="form-control" style="margin-top:6px" />
+                            </form>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle hvr-underline-from-center" data-toggle="dropdown" style="font-size:16px">@User.Identity.Name<b class="fa fa-caret-down"></b></a>
+                            <ul class="dropdown-menu agile_short_dropdown">
+                                <li class="f">@Html.ActionLink("Profile", "Details", "Users", new { id = new DB().Users.First(x => x.UserName == User.Identity.Name).ID }, null)</li>
+                                <li class="f">@Html.ActionLink("Sign Out", "Signout", "Auth")</li>
+                            </ul>
+                        </li>
+                        <li><img src="~/Uploads/Users/@(new DB().Users.First(x=>x.UserName==User.Identity.Name).ID).jpg" alt="" width="60" height="50" style="border-radius: 40%;" /><br /></li>
+                    }
+                    else
+                    {
+                        <li class="f" style="font-size:20px">@Html.ActionLink("Sign In", "Signin", "Auth")</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

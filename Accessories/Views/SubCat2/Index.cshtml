@@ -1,0 +1,69 @@
+﻿@using Accessories.Models
+@model IEnumerable<SubCat2>
+@{
+    ViewBag.Title = "SEC-Sub Categories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SEC-Sub Categories</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Ajax.BeginForm("GetData", "SubCat2", new AjaxOptions { UpdateTargetId = "DIV", HttpMethod = "POST", InsertionMode = InsertionMode.Replace }))
+{
+            @Html.DropDownList("cat_id", new SelectList(new DB().Categories, "ID", "Name"), "--Select Category--", htmlAttributes: new { @class = "form-control" })
+    <br/>
+            @Html.DropDownList("subCat_id", new SelectList(" "), "--Select Sub Category--", htmlAttributes: new { @class = "form-control" })
+    <input id="Submit1" type="submit" value="Show Sub Sub Categories" class="btn btn-default" />
+    <br />
+    <div id="DIV">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SubCat1.Name)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubCat1.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery-1.10.2.intellisense.js"></script>
+<script>
+    $(document).ready(function(){
+          $("#cat_id").change(function(){
+              $.get("/SubCat2/GetSubCat", { Catid: $("#cat_id").val() }, function (data) {
+                  $("#subCat_id").empty();
+                  $.each(data, function (index, row) {
+                      $("#subCat_id").append("<option value='" + row.ID + "'>" + row.Name + "</option>");
+                  });
+              });
+           });
+        });
+</script>
+

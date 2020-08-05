@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Accessories.Models.User>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .fady{
+        color:red;
+    }
+</style>
+<h2>Users</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th style="text-align:center;">
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th style="text-align:center;">
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th style="text-align:center;">
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th style="text-align:center;">
+            @Html.DisplayNameFor(model => model.Department.Name)
+        </th>
+        <th style="text-align:center;">
+            Photo
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    string phone= "0" + item.Phone;
+    <tr>
+        <td style="text-align:center;">
+            @Html.ActionLink(item.UserName, "Details", new { id = item.ID }, new { @class = "fady" })
+        </td>
+        <td style="text-align:center;">
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td style="text-align:center;">
+            @phone
+        </td>
+        <td style="text-align:center;">
+            @Html.DisplayFor(modelItem => item.Department.Name)
+        </td>
+        <td style="text-align:center;">
+            <img src="~/Uploads/Users/@(item.ID).jpg" alt="" width="50" height="50" />
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

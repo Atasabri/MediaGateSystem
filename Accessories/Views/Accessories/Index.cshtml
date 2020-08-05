@@ -1,0 +1,132 @@
+﻿@using Accessories.Models
+@model List<Accessory>
+@{
+    ViewBag.Title = "Accessories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Accessories</h2>
+<style>
+    #th{
+        color:red;
+    }
+</style>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Ajax.BeginForm("Search", "Accessories", new AjaxOptions { UpdateTargetId = "content", HttpMethod = "Post", InsertionMode = InsertionMode.Replace }))
+{
+    <div>
+        <input id="txtSearch" type="search" name="txtSearch" class="form-control" placeholder="Search" />
+        <input type="hidden" id="hfCustomer" name="CustomerId" />
+
+        <input id="Button1" type="submit" value="Search" class="btn btn-default" />
+    </div>
+}
+    <div id="content">
+        @if (ViewData["Search"] != null)
+        {
+            @Html.ActionLink("Export As PDF", "Expert", new { Page = "index", search = ViewData["Search"] })
+        }
+        else
+        {
+            @Html.ActionLink("Export As PDF", "Expert", new { Page = "index" })
+        }
+        <table class="table" style="align-content:center;align-content:center">
+            <tr>
+                <th style="text-align:center;color:red">
+                    NO
+                </th>
+                <th style="text-align:center;color:red">
+                    Name
+                </th>
+                <th style="text-align:center;color:red">
+                    Quantity
+                </th>
+                <th style="text-align:center;color:red">
+                    Location
+                </th>
+                <th style="text-align:center;color:red">
+                    Model
+                </th>
+                <th style="text-align:center;color:red">
+                    Serial Number
+                </th>
+                <th style="text-align:center;color:red">
+                    Category Name
+                </th>
+                <th style="text-align:center;color:red">
+                    Color
+                </th>
+                <th style="text-align:center;color:red">
+                    Photo
+                </th>
+                <th></th>
+            </tr>
+            @{
+                int counter = 0;
+            }
+            @foreach (var item in Model)
+            {
+                counter++;
+                string path = "";
+                try
+                {
+                    path = Path.GetFileName(Directory.GetFiles(Server.MapPath("~/Uploads/Img/"), item.ID + "IMG" + "*")[0]);
+                }
+                catch
+                {
+                    path = "";
+                }
+                <tr>
+                    <td style="text-align:center">
+                        @counter
+                    </td>
+                    <td style="text-align:center">
+
+                        <a href="/Accessories/Details/@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Serial_Number)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    @if (item.colors.Count != 0)
+                {
+                        <td style="text-align:center">
+                            @item.colors.First().Name
+                        </td>
+                    }
+                    else
+                    {
+                        <td>No Color</td>
+                    }
+                    <td style="text-align:center">
+                        <img src="~/Uploads/Img/@path" alt="" width="50" height="50" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @id = "test" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery-1.10.2.intellisense.js"></script>

@@ -1,0 +1,111 @@
+﻿@model Accessories.Models.Accessory
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Accessory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            Colors
+        </dt>
+        <dd>
+            @foreach (var item in Model.colors)
+            {
+                @item.Name <span>||</span>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Statue.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Statue.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Serial_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Serial_Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Entry_Data)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Entry_Data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Departure_Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Departure_Date)
+        </dd>
+        <dt>
+           Photos
+        </dt>
+        <dd>
+            @foreach (string item in Directory.GetFiles(Server.MapPath("~/Uploads/Img/"), Model.ID + "IMG" + "*").Select(x => x = Path.GetFileName(x)))
+            {
+                <img src="~/Uploads/Img/@item" alt="" width="200" height="200" />
+            }
+        </dd>
+    </dl>
+</div>
+<br />
+@Html.ActionLink("Export As PDF", "Expert", new { @Page = "Details",@id=Model.ID  })
+<br/><br/>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

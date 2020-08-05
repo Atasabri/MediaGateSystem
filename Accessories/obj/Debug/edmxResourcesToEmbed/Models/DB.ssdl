@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AccessoriesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Accessories">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Serial_Number" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Model" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Weight" Type="float" Nullable="false" />
+    <Property Name="Entry_Data" Type="date" Nullable="false" />
+    <Property Name="Departure_Date" Type="date" Nullable="false" />
+    <Property Name="Work_In" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Buy_Date" Type="date" Nullable="false" />
+    <Property Name="Special_Prop" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="Cat_ID" Type="int" Nullable="false" />
+    <Property Name="Stat_ID" Type="int" Nullable="false" />
+    <Property Name="User_ID" Type="int" Nullable="false" />
+    <Property Name="Location" Type="nvarchar(max)" />
+    <Property Name="SubCat1_ID" Type="int" />
+    <Property Name="SubCat2_ID" Type="int" />
+    <Property Name="Depart_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="colors">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Acc_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Statues">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="int" />
+    <Property Name="Depart_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="Departments">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubCat1">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Cat_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubCat2">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SubCat1_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Accessori__Depar__44FF419A">
+    <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+    <End Role="Accessories" Type="Self.Accessories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departments">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="Depart_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Accessori__SubCa__2F10007B">
+    <End Role="SubCat1" Type="Self.SubCat1" Multiplicity="0..1" />
+    <End Role="Accessories" Type="Self.Accessories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCat1">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="SubCat1_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Accessori__SubCa__300424B4">
+    <End Role="SubCat2" Type="Self.SubCat2" Multiplicity="0..1" />
+    <End Role="Accessories" Type="Self.Accessories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCat2">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="SubCat2_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubCat1__Cat_ID__276EDEB3">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="SubCat1" Type="Self.SubCat1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SubCat1">
+        <PropertyRef Name="Cat_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubCat2__SubCat1__2C3393D0">
+    <End Role="SubCat1" Type="Self.SubCat1" Multiplicity="1" />
+    <End Role="SubCat2" Type="Self.SubCat2" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCat1">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SubCat2">
+        <PropertyRef Name="SubCat1_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__Depart_ID__440B1D61">
+    <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departments">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="Depart_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AccessoriCat_I_164452B1">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Accessories" Type="Self.Accessories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="Cat_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AccessoriStat__173876EA">
+    <End Role="Statues" Type="Self.Statues" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Accessories" Type="Self.Accessories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statues">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="Stat_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AccessoriUser__182C9B23">
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Accessories" Type="Self.Accessories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="User_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_colorsAcc_ID_1B0907CE">
+    <End Role="Accessories" Type="Self.Accessories" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="colors" Type="Self.colors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Accessories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="colors">
+        <PropertyRef Name="Acc_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AccessoriesModelStoreContainer">
+    <EntitySet Name="Accessories" EntityType="Self.Accessories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="colors" EntityType="Self.colors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Statues" EntityType="Self.Statues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Departments" EntityType="Self.Departments" Schema="Simple" store:Type="Tables" />
+    <EntitySet Name="SubCat1" EntityType="Self.SubCat1" Schema="Simple" store:Type="Tables" />
+    <EntitySet Name="SubCat2" EntityType="Self.SubCat2" Schema="Simple" store:Type="Tables" />
+    <AssociationSet Name="FK__Accessori__Depar__44FF419A" Association="Self.FK__Accessori__Depar__44FF419A">
+      <End Role="Departments" EntitySet="Departments" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Accessori__SubCa__2F10007B" Association="Self.FK__Accessori__SubCa__2F10007B">
+      <End Role="SubCat1" EntitySet="SubCat1" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Accessori__SubCa__300424B4" Association="Self.FK__Accessori__SubCa__300424B4">
+      <End Role="SubCat2" EntitySet="SubCat2" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubCat1__Cat_ID__276EDEB3" Association="Self.FK__SubCat1__Cat_ID__276EDEB3">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="SubCat1" EntitySet="SubCat1" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubCat2__SubCat1__2C3393D0" Association="Self.FK__SubCat2__SubCat1__2C3393D0">
+      <End Role="SubCat1" EntitySet="SubCat1" />
+      <End Role="SubCat2" EntitySet="SubCat2" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__Depart_ID__440B1D61" Association="Self.FK__Users__Depart_ID__440B1D61">
+      <End Role="Departments" EntitySet="Departments" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AccessoriCat_I_164452B1" Association="Self.FK_AccessoriCat_I_164452B1">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AccessoriStat__173876EA" Association="Self.FK_AccessoriStat__173876EA">
+      <End Role="Statues" EntitySet="Statues" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AccessoriUser__182C9B23" Association="Self.FK_AccessoriUser__182C9B23">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_colorsAcc_ID_1B0907CE" Association="Self.FK_colorsAcc_ID_1B0907CE">
+      <End Role="Accessories" EntitySet="Accessories" />
+      <End Role="colors" EntitySet="colors" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

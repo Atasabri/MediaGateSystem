@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AccessoriesModelStoreContainer" CdmEntityContainer="DB">
+    <EntitySetMapping Name="Accessories">
+      <EntityTypeMapping TypeName="AccessoriesModel.Accessory">
+        <MappingFragment StoreEntitySet="Accessories">
+          <ScalarProperty Name="Depart_ID" ColumnName="Depart_ID" />
+          <ScalarProperty Name="SubCat2_ID" ColumnName="SubCat2_ID" />
+          <ScalarProperty Name="SubCat1_ID" ColumnName="SubCat1_ID" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Serial_Number" ColumnName="Serial_Number" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Entry_Data" ColumnName="Entry_Data" />
+          <ScalarProperty Name="Departure_Date" ColumnName="Departure_Date" />
+          <ScalarProperty Name="Work_In" ColumnName="Work_In" />
+          <ScalarProperty Name="Buy_Date" ColumnName="Buy_Date" />
+          <ScalarProperty Name="Special_Prop" ColumnName="Special_Prop" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Cat_ID" ColumnName="Cat_ID" />
+          <ScalarProperty Name="Stat_ID" ColumnName="Stat_ID" />
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="AccessoriesModel.Category">
+        <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="colors">
+      <EntityTypeMapping TypeName="AccessoriesModel.color">
+        <MappingFragment StoreEntitySet="colors">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Acc_ID" ColumnName="Acc_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Statues">
+      <EntityTypeMapping TypeName="AccessoriesModel.Statue">
+        <MappingFragment StoreEntitySet="Statues">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="AccessoriesModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Depart_ID" ColumnName="Depart_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubCat1">
+      <EntityTypeMapping TypeName="AccessoriesModel.SubCat1">
+        <MappingFragment StoreEntitySet="SubCat1">
+          <ScalarProperty Name="Cat_ID" ColumnName="Cat_ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubCat2">
+      <EntityTypeMapping TypeName="AccessoriesModel.SubCat2">
+        <MappingFragment StoreEntitySet="SubCat2">
+          <ScalarProperty Name="SubCat1_ID" ColumnName="SubCat1_ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="AccessoriesModel.Department">
+        <MappingFragment StoreEntitySet="Departments">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

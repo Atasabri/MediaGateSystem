@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AccessoriesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Accessory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Serial_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Weight" Type="Double" Nullable="false" />
+    <Property Name="Entry_Data" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Departure_Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Work_In" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Buy_Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Special_Prop" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Cat_ID" Type="Int32" Nullable="false" />
+    <Property Name="Stat_ID" Type="Int32" Nullable="false" />
+    <Property Name="User_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="Self.FK__Accessori__Cat_I__164452B1" FromRole="Accessories" ToRole="Categories" />
+    <NavigationProperty Name="Statue" Relationship="Self.FK__Accessori__Stat___173876EA" FromRole="Accessories" ToRole="Statues" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Accessori__User___182C9B23" FromRole="Accessories" ToRole="Users" />
+    <NavigationProperty Name="colors" Relationship="Self.FK__colors__Acc_ID__1B0907CE" FromRole="Accessories" ToRole="colors" />
+    <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubCat1_ID" Type="Int32" />
+    <Property Name="SubCat2_ID" Type="Int32" />
+    <NavigationProperty Name="SubCat1" Relationship="AccessoriesModel.FK__Accessori__SubCa__2F10007B" FromRole="Accessory" ToRole="SubCat1" />
+    <NavigationProperty Name="SubCat2" Relationship="AccessoriesModel.FK__Accessori__SubCa__300424B4" FromRole="Accessory" ToRole="SubCat2" />
+    <Property Name="Depart_ID" Type="Int32" />
+    <NavigationProperty Name="Department" Relationship="AccessoriesModel.FK__Accessori__Depar__44FF419A" FromRole="Accessory" ToRole="Department" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Accessories" Relationship="Self.FK__Accessori__Cat_I__164452B1" FromRole="Categories" ToRole="Accessories" />
+    <NavigationProperty Name="SubCat1" Relationship="AccessoriesModel.FK__SubCat1__Cat_ID__276EDEB3" FromRole="Category" ToRole="SubCat1" />
+  </EntityType>
+  <EntityType Name="color">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Acc_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Accessory" Relationship="Self.FK__colors__Acc_ID__1B0907CE" FromRole="colors" ToRole="Accessories" />
+  </EntityType>
+  <EntityType Name="Statue">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Accessories" Relationship="Self.FK__Accessori__Stat___173876EA" FromRole="Statues" ToRole="Accessories" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="Int32" />
+    <NavigationProperty Name="Accessories" Relationship="Self.FK__Accessori__User___182C9B23" FromRole="Users" ToRole="Accessories" />
+    <Property Name="Depart_ID" Type="Int32" />
+    <NavigationProperty Name="Department" Relationship="AccessoriesModel.FK__Users__Depart_ID__440B1D61" FromRole="User" ToRole="Department" />
+  </EntityType>
+  <Association Name="FK__Accessori__Cat_I__164452B1">
+    <End Role="Categories" Type="Self.Category" Multiplicity="1" />
+    <End Role="Accessories" Type="Self.Accessory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="Cat_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Accessori__Stat___173876EA">
+    <End Role="Statues" Type="Self.Statue" Multiplicity="1" />
+    <End Role="Accessories" Type="Self.Accessory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statues">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="Stat_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Accessori__User___182C9B23">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Accessories" Type="Self.Accessory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="User_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__colors__Acc_ID__1B0907CE">
+    <End Role="Accessories" Type="Self.Accessory" Multiplicity="1" />
+    <End Role="colors" Type="Self.color" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Accessories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="colors">
+        <PropertyRef Name="Acc_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accessories" EntityType="Self.Accessory" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="colors" EntityType="Self.color" />
+    <EntitySet Name="Statues" EntityType="Self.Statue" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__Accessori__Cat_I__164452B1" Association="Self.FK__Accessori__Cat_I__164452B1">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Accessori__Stat___173876EA" Association="Self.FK__Accessori__Stat___173876EA">
+      <End Role="Statues" EntitySet="Statues" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Accessori__User___182C9B23" Association="Self.FK__Accessori__User___182C9B23">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__colors__Acc_ID__1B0907CE" Association="Self.FK__colors__Acc_ID__1B0907CE">
+      <End Role="Accessories" EntitySet="Accessories" />
+      <End Role="colors" EntitySet="colors" />
+    </AssociationSet>
+    <EntitySet Name="SubCat1" EntityType="AccessoriesModel.SubCat1" />
+    <EntitySet Name="SubCat2" EntityType="AccessoriesModel.SubCat2" />
+    <AssociationSet Name="FK__SubCat1__Cat_ID__276EDEB3" Association="AccessoriesModel.FK__SubCat1__Cat_ID__276EDEB3">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="SubCat1" EntitySet="SubCat1" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubCat2__SubCat1__2C3393D0" Association="AccessoriesModel.FK__SubCat2__SubCat1__2C3393D0">
+      <End Role="SubCat1" EntitySet="SubCat1" />
+      <End Role="SubCat2" EntitySet="SubCat2" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Accessori__SubCa__2F10007B" Association="AccessoriesModel.FK__Accessori__SubCa__2F10007B">
+      <End Role="SubCat1" EntitySet="SubCat1" />
+      <End Role="Accessory" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Accessori__SubCa__300424B4" Association="AccessoriesModel.FK__Accessori__SubCa__300424B4">
+      <End Role="SubCat2" EntitySet="SubCat2" />
+      <End Role="Accessory" EntitySet="Accessories" />
+    </AssociationSet>
+    <EntitySet Name="Departments" EntityType="AccessoriesModel.Department" />
+    <AssociationSet Name="FK__Accessori__Depar__44FF419A" Association="AccessoriesModel.FK__Accessori__Depar__44FF419A">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="Accessory" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__Depart_ID__440B1D61" Association="AccessoriesModel.FK__Users__Depart_ID__440B1D61">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="SubCat1">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Cat_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="AccessoriesModel.FK__SubCat1__Cat_ID__276EDEB3" FromRole="SubCat1" ToRole="Category" />
+    <NavigationProperty Name="SubCat2" Relationship="AccessoriesModel.FK__SubCat2__SubCat1__2C3393D0" FromRole="SubCat1" ToRole="SubCat2" />
+    <NavigationProperty Name="Accessories" Relationship="AccessoriesModel.FK__Accessori__SubCa__2F10007B" FromRole="SubCat1" ToRole="Accessory" />
+  </EntityType>
+  <EntityType Name="SubCat2">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SubCat1_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SubCat1" Relationship="AccessoriesModel.FK__SubCat2__SubCat1__2C3393D0" FromRole="SubCat2" ToRole="SubCat1" />
+    <NavigationProperty Name="Accessories" Relationship="AccessoriesModel.FK__Accessori__SubCa__300424B4" FromRole="SubCat2" ToRole="Accessory" />
+  </EntityType>
+  <Association Name="FK__SubCat1__Cat_ID__276EDEB3">
+    <End Type="AccessoriesModel.Category" Role="Category" Multiplicity="1" />
+    <End Type="AccessoriesModel.SubCat1" Role="SubCat1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SubCat1">
+        <PropertyRef Name="Cat_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubCat2__SubCat1__2C3393D0">
+    <End Type="AccessoriesModel.SubCat1" Role="SubCat1" Multiplicity="1" />
+    <End Type="AccessoriesModel.SubCat2" Role="SubCat2" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCat1">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SubCat2">
+        <PropertyRef Name="SubCat1_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Accessori__SubCa__2F10007B">
+    <End Type="AccessoriesModel.SubCat1" Role="SubCat1" Multiplicity="0..1" />
+    <End Type="AccessoriesModel.Accessory" Role="Accessory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCat1">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessory">
+        <PropertyRef Name="SubCat1_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Accessori__SubCa__300424B4">
+    <End Type="AccessoriesModel.SubCat2" Role="SubCat2" Multiplicity="0..1" />
+    <End Type="AccessoriesModel.Accessory" Role="Accessory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCat2">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessory">
+        <PropertyRef Name="SubCat2_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Accessories" Relationship="AccessoriesModel.FK__Accessori__Depar__44FF419A" FromRole="Department" ToRole="Accessory" />
+    <NavigationProperty Name="Users" Relationship="AccessoriesModel.FK__Users__Depart_ID__440B1D61" FromRole="Department" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__Accessori__Depar__44FF419A">
+    <End Type="AccessoriesModel.Department" Role="Department" Multiplicity="0..1" />
+    <End Type="AccessoriesModel.Accessory" Role="Accessory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Accessory">
+        <PropertyRef Name="Depart_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__Depart_ID__440B1D61">
+    <End Type="AccessoriesModel.Department" Role="Department" Multiplicity="0..1" />
+    <End Type="AccessoriesModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Depart_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

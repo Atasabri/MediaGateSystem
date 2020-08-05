@@ -1,0 +1,249 @@
+﻿@using Accessories.Models
+@model Accessories.Models.Accessory
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Ajax.BeginForm("Addcolor", new AjaxOptions { UpdateTargetId = "Colors", HttpMethod = "Post", InsertionMode = InsertionMode.Replace }))
+{
+    <div class="form-group">
+        <label class="control-label col-md-2">Color</label>
+        <div class="col-md-10">
+            <input id="Text1" type="text" class="form-control" name="color" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add Color" class="btn btn-default" />
+        </div>
+    </div>
+    <br />
+    <div id="Colors">
+        <table class="table">
+            @if (Session["Colors"] != null)
+            {
+                foreach (var item in Session["Colors"] as List<color>)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+}
+@using (Html.BeginForm("Edit", "Accessories", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Accessory</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div><div class="form-group">
+    @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+    </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @required = "Required" } })
+                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Stat_ID, "Statue", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Stat_ID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Stat_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cat_ID, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Cat_ID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Cat_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.SubCat1_ID, "Sub Category", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SubCat1_ID", new SelectList(new DB().SubCat1.Where(x => x.Cat_ID == Model.Cat_ID), "ID", "Name", Model.SubCat1), "--Select Sub Category--", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.SubCat2_ID, "Sub Sub Category", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SubCat2_ID", new SelectList(new DB().SubCat2.Where(x => x.SubCat1_ID == Model.SubCat1_ID), "ID", "Name", Model.SubCat2), "--Select Sub Sub Category--", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Model, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Serial_Number, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Serial_Number, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Serial_Number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Weight, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Entry_Data, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Entry_Data, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Entry_Data, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Departure_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Departure_Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Departure_Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Work_In, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Work_In, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Work_In, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Buy_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Buy_Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Buy_Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Special_Prop, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Special_Prop, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Special_Prop, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User_ID, "With User", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("User_ID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.User_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Department.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Depart_ID", new SelectList(new DB().Departments, "ID", "Name",Model.Depart_ID), "--Select Department--", new { @class = "form-control", @required = "Required" })
+                @Html.ValidationMessageFor(model => model.Department.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Add Photos</label>
+            <div class="col-md-10">
+                <input id="File1" type="file" multiple name="files" />
+                @Html.ValidationMessageFor(model => model.User_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<h2>Images</h2>
+<div>
+    <table class="table">            
+          @foreach (string item in Directory.GetFiles(Server.MapPath("~/Uploads/Img/"),Model.ID+"IMG"+"*").Select(x=>x=Path.GetFileName(x)))
+           {
+                <tr>
+                    <td><img src="~/Uploads/Img/@item" alt="" width="200" height="200" /></td>
+                    <td>@Html.ActionLink("Delete", "DeleteImg", new { @path = item,@id=Model.ID })</td>
+                </tr>           
+            }        
+    </table>
+</div>
+<br/>
+<h2>Colors</h2>
+<div>
+    <table class="table">
+        @foreach (var item in Model.colors.ToList())
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@Html.ActionLink("Delete", "DeleteColor", new { @colorid = item.ID,@id=Model.ID })</td>
+            </tr>
+        }
+    </table>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery-1.10.2.intellisense.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#Cat_ID").change(function () {
+            $.get("/Accessories/GetSubCat", { Catid: $("#Cat_ID").val() }, function (data) {
+                $("#SubCat1_ID").empty();
+                $("#SubCat1_ID").append("<option value='" +""+ "'>" + "None" + "</option>");
+                  $.each(data, function (index, row) {
+                      $("#SubCat1_ID").append("<option value='" + row.ID + "'>" + row.Name + "</option>");
+                  });
+              });
+           });
+        });
+</script>
+<script>
+    $(document).ready(function(){q
+        $("#SubCat1_ID").change(function () {
+            $.get("/Accessories/GetSubSubCat", { Catid: $("#SubCat1_ID").val() }, function (data) {
+                $("#SubCat2_ID").empty();
+                $("#SubCat2_ID").append("<option value='"+""+"'>" + "None" + "</option>");
+                  $.each(data, function (index, row) {
+                      $("#SubCat2_ID").append("<option value='" + row.ID + "'>" + row.Name + "</option>");
+                  });
+              });
+           });
+        });
+</script>

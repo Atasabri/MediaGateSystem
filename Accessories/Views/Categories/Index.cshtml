@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Accessories.Models.Category>
+
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .fady{
+        color:red;
+    }
+</style>
+<h2>Categories</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            NO.
+        </th>
+        <th>
+           @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+    @{
+        int counter = 0;
+    }
+@foreach (var item in Model) {
+    counter++;
+    <tr>
+        <td>
+            @counter
+        </td>
+        <td>
+         @Html.ActionLink(item.Name, "Details", new { id = item.ID }, new { @class = "fady" })
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

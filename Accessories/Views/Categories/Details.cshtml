@@ -1,0 +1,89 @@
+﻿@model Accessories.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="color:red">@Model.Name</h2>
+<style>
+    .fady{
+        color:red;
+    }
+</style>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<h2>Sub && SEC-Sub Categories in This Category</h2>
+<table class="table">
+    @foreach (var item in Model.SubCat1)
+    {
+        <tr>
+            <th>
+                @Html.ActionLink(item.Name, "Details","SubCat1", new { id = item.ID })
+            </th>
+            <th></th>
+        </tr>
+
+        foreach (var i in item.SubCat2)
+        {
+            <tr>
+                <td>
+                    @i.Name
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "SubCat2", new { id = i.ID }, null) |
+                    @Html.ActionLink("Edit", "Edit", "SubCat2", new { id = i.ID }, null) |
+                    @Html.ActionLink("Delete", "Delete", "SubCat2", new { id = i.ID }, null)
+                </td>
+            </tr>
+        }
+    }
+</table>
+<br/>
+<h2> ALL Accessories in This Category</h2>
+<table class="table">
+    <tr>
+        <th>
+            NO.
+        </th>
+        <th>
+           Accessory Name
+        </th>
+        <th>
+           Sub Category
+        </th>
+        <th>
+            Sec- Sub Category
+        </th>
+        <th></th>
+    </tr>
+    @{ 
+        int counter = 0;
+    }
+    @foreach (var item in Model.Accessories)
+    {
+        counter++;
+        <tr>
+            <td>
+             @counter
+            </td>
+            <td>
+                @Html.ActionLink(item.Name, "Details", "Accessories", new { id = item.ID }, new {@class="fady" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubCat1.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubCat2.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details","Accessories", new { id = item.ID },null) |
+                @Html.ActionLink("Edit", "Edit", "Accessories", new { id = item.ID }, null) |
+                @Html.ActionLink("Delete", "Delete", "Accessories", new { id = item.ID }, null) 
+            </td>
+        </tr>
+    }
+
+</table>
